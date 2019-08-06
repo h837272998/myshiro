@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjh.myshiro.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.hjh.myshiro.entity.Role">
+    <constructor>
+      <arg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="describe" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.hjh.myshiro.entity.Role">
+    insert into t_role (id, `name`, `describe`
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjh.myshiro.entity.Role">
+    insert into t_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="describe != null">
+        `describe`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null">
+        #{describe,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update">
+    update t_role set `name` =#{name},`describe`=#{describe} where id = #{id}
+  </update>
+  <delete id="delete">
+    delete from t_role where id = #{id}
+  </delete>
+  <select id="getRoleById" resultType="com.hjh.myshiro.entity.Role">
+      select * from t_role where id = #{rid}
+    </select>
+    <select id="list" resultType="com.hjh.myshiro.entity.Role">
+      select * from t_role
+    </select>
+</mapper>

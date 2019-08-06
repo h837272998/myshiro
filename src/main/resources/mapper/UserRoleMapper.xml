@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hjh.myshiro.mapper.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.hjh.myshiro.entity.UserRole">
+    <constructor>
+      <arg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="uid" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="rid" javaType="java.lang.Long" jdbcType="BIGINT" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.hjh.myshiro.entity.UserRole">
+    insert into t_user_role (id, uid, rid)
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{rid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjh.myshiro.entity.UserRole">
+    insert into t_user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="rid != null">
+        rid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="rid != null">
+        #{rid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteUserRoleById">
+    delete from t_user_role where id = #{id}
+  </delete>
+
+  <select id="getUserRoleByUid" resultType="com.hjh.myshiro.entity.UserRole">
+      select * from t_user_role where uid=#{id}
+    </select>
+</mapper>

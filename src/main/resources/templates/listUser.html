@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}">
+</head>
+<body>
+<div class="workingroom">
+    <div th:include="@{include/menu.html}"></div>
+    <table>
+        <tr>
+            <td>id</td>
+            <td>用户名称</td>
+            <td>用户密码</td>
+            <td>加密盐</td>
+            <td>角色</td>
+            <td>编辑</td>
+            <td>删除</td>
+        </tr>
+        <tr th:each="u:${us}">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.username}"></td>
+            <td th:text="${#strings.substring(u.pswd,0,5)}+'...'"></td>
+            <td th:text="${#strings.substring(u.salt,0,5)}+'...'"></td>
+            <td>
+                <span th:each="r:${user_roles.get(u)}" th:text="${r.name}"><br></span>
+            </td>
+            <td><a th:href="@{'editUser?id='+${u.id}}">编辑</a> </td>
+            <td><a th:href="@{'deleteUser?id='+${u.id}}">删除</a> </td>
+        </tr>
+    </table>
+
+    <div class="addOrEdit" >
+        <form action="addUser" method="post">
+            用户名: <input type="text" name="name"> <br>
+            密码: <input type="password" name="password"> <br><br>
+            <input type="submit" value="增加">
+        </form>
+    </div>
+</div>
+</body>
+</html>

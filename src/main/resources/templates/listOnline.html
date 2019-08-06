@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}">
+</head>
+<body>
+<div class="workingroom">
+    <div th:include="@{include/menu.html}"></div>
+    <table>
+        <tr>
+            <!--<td>id</td>-->
+            <td>用户名称</td>
+            <td>sessionId</td>
+            <td>host</td>
+            <td>startTime</td>
+            <td>lastAccess</td>
+            <td>操作</td>
+        </tr>
+        <tr th:each="u:${userOnline}">
+            <!--<td th:text="${u.id}"></td>-->
+            <td th:text="${u?.username}"></td>
+            <td th:text="${u?.sessionId}"></td>
+            <td th:text="${u?.host}"></td>
+            <td th:text="${u?.startTime}">
+            <td th:text="${u?.lastAccess}">
+            <td th:if="${u==null?false:true}"><a th:href="'tOut?sessionId='+${u?.sessionId}">踢出</a></td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>

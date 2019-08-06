@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}">
+</head>
+<body>
+<div class="workingroom">
+    <div class="loginDiv">
+        <a href="/login" th:if="${session?.username}==null">登录</a>
+        <span class="desc" th:if="${session?.username}!=null" th:text= "'你好,'+${session?.username}"></span>
+        <a href="/doLogout" th:if="${session?.username}!=null" >退出</a><br>
+
+        <a href="/admin/listUser">后台管理</a><span class="desc">admin角色才可以访问</span><br>
+        <a href="listProduct">查看产品</a><span class="desc">(要有查看产品权限)</span><br>
+        <a href="deleteProduct">删除产品</a><span class="desc">(要有删除产品权限)</span><br>
+        <a href="deleteOrder">删除订单</a><span class="desc">(要有删除订单权限)</span><br>
+    </div>
+</body>
+</html>

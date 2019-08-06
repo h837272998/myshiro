@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}">
+</head>
+<body>
+<div class="workingroom">
+    <div th:include="@{/include/menu.html}"></div>
+    <table>
+        <tr>
+            <td>id</td>
+            <td>角色名称</td>
+            <td>角色描述</td>
+            <td>权限</td>
+            <td>编辑</td>
+            <td>删除</td>
+        </tr>
+        <tr th:each="r:${rs}">
+            <td th:text="${r.id}"></td>
+            <td th:text="${r.name}"></td>
+            <td th:text="${r.describe}"></td>
+            <td>
+                <span th:each="p:${role_permissions.get(r)}" th:text="${p.name}"><br></span>
+            </td>
+            <td><a th:href="'editRole?id='+${r.id}">编辑</a> </td>
+            <td><a th:href="'deleteRole?id='+${r.id}">删除</a> </td>
+        </tr>
+    </table>
+
+    <div class="addOrEdit">
+        <form action="addRole" method="post">
+            角色名称: <input type="text" name="name"> <br>
+            角色描述: <input type="text" name="describe"> <br><br>
+            <input type="submit" value="增加">
+        </form>
+    </div>
+
+</body>
+</html>

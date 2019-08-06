@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}">
+</head>
+<body>
+<div class="workingroom">
+
+    <div th:include="@{/include/menu}"></div>
+    <div class="addOrEdit" >
+        <form action="updateUser" method="post">
+            用户名: <input type="text" name="username" th:value="${user.username}"> <br><br>
+            密码: <input type="password" name="pswd" value="" placeholder="留空就表示不修改密码"> <br><br>
+            配置角色:<br>
+            <div style="text-align:left;width:300px;margin:0px auto;padding-left:50px">
+                <div th:each="r:${rs}">
+                    <!--<div th:each="currentRole:${currentRoles}">-->
+                    <!--</div>-->
+                    <input type="checkbox" th:checked="${#lists.contains(currentRoles, r.id)}" name="roleIds" th:value="${r.id}" th:utext="${r.name}+'<br>'">
+                </div>
+            </div>
+
+            <br>
+            <input type="hidden" name="id" th:value="${user.id}">
+            <input type="submit" value="修改">
+        </form>
+    </div>
+</div>
+</body>
+</html>

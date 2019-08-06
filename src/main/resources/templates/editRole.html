@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}">
+</head>
+<body>
+<div class="workingroom">
+
+    <div th:include="@{/include/menu}"></div>
+    <div class="addOrEdit" >
+        <form action="updateRole" method="post">
+            角色名: <input type="text" name="name" th:value="${role.name}"> <br>
+            角色描述: <input type="text" name="describe" th:value="${role.describe}" > <br><br>
+            配置权限:<br>
+            <div style="text-align:left;width:300px;margin:0px auto;padding-left:50px">
+                <div th:each="p:${ps}">
+                    <!--错误的写法  应该改写成editUser那样 。不过这里的currentPermission不会为空 所以也可以这样写-->
+                    <!--<div th:each="currentPermission,currentPermissionStat:${currentPermissions}">-->
+                        <!--<input type="checkbox" th:if="${currentPermissionStat.index}==0" th:checked="${p.id==currentPermission.id?true:false}" name="permissionIds" th:value="${p.id}" th:utext="${p.name}+'<br>'">-->
+                    <!--</div>-->
+
+                    <input type="checkbox" th:checked="${#lists.contains(currentPermissions, p.id)}" name="permissionIds" th:value="${p.id}" th:utext="${p.name}+'<br>'">
+
+                </div>
+            </div>
+
+            <input type="hidden" name="id" th:value="${role.id}">
+            <input type="submit" value="修改">
+        </form>
+    </div>
+</div>
+</body>
+</html>

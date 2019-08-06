@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}" />
+
+</head>
+<body>
+<div class="workingroom" id="myVue1">
+
+    <div class="errorInfo" th:text="${error}"></div>
+    <form action="login" method="post">
+        账号： <input v-model="user.username" type="text" name="username"> <br>
+        密码： <input v-model="user.pswd" type="password" name="password"> <br>
+        验证码：<input type="text" v-model="vcode" name="vcode" id="vcode"/>
+        <p>
+            <img alt="验证码" src="/getCode">
+        </p>
+        <P><input type="checkbox" v-model="rememberMe" name="rememberMe"  id="rememberMe" />记住我</P>
+        <br>
+        <input type="button" @click="loginValidate" value="登录">
+        <br>
+        <br>
+    </form>
+</div>
+<script type="text/javascript" src="/static/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/static/js/vue.js"></script>
+<script type="text/javascript" src="/static/js/axios.min.js"></script>
+<script type="text/javascript" src="/static/layer/layer.js"></script>
+<script>
+    var data4Vue = {
+        user:{username:"", pswd:""},
+        rememberMe:"",
+        vcode:""
+    }
+    // axios.defaults.headers.post['Content-Type'] ="application/x-www-form-urlencoded";
+
+    var vue = new Vue({
+        el:"#myVue1",
+        data:data4Vue,
+        methods:{
+            loginValidate:function () {
+                var params = new URLSearchParams();
+                params.append('username',vue.user.username);
+                params.append('pswd',vue.user.pswd);
+                params.append('rememberMe',vue.rememberMe);
+                params.append('vcode',vue.vcode);
+                axios({
+                    url:"/login",
+                    method:"post",
+                    data:params,
+                    headers: {'X-Requested-With': 'XMLHttpRequest'},
+                }).then(function (value) {
+                    var result = value.data;
+                    if (result.code==0){
+                        layer.msg("登录成功...",{icon:1})
+                        setTimeout(function () {
+                            window.location.href="index";
+                        },1000)
+                    } else{
+                        layer.msg(result.msg,{icon:2})
+                    }
+                })
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
